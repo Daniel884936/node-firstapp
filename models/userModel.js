@@ -20,7 +20,7 @@ const userSchema = new Schema({
         required: true,
         unique:true
     },
-    status:{
+    active:{
         type: Boolean,
         required: true,
         default: true
@@ -34,27 +34,11 @@ const userSchema = new Schema({
     ]
 })
 
+
 userSchema.pre('remove', async function(next){
     await mongoose.model('Hero').deleteMany({user: this._id})
     next();
 })
 
 
-//TODO
-const User = mongoose.model('User', userSchema)
-
-async function createUser(){
-    const user = new User({
-        name:'Daniel',
-        surnames:'Tejada Montero',
-        password:'123456',
-        email :'rejadadaniel@gmial.com'
-})
-
-console.log('asdadasdasd')
-const result = await user.save();
-console.log(result)
-}
-
-createUser();
-
+module.exports = mongoose.model('User', userSchema)

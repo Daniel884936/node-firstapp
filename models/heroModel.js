@@ -13,6 +13,11 @@ const heroSchema = new Schema({
     user:{
         ref: 'User',
         type: mongoose.Schema.Types.ObjectID
+    },
+    active:{
+        type: Boolean,
+        default: true , 
+        required: true 
     }
 })
 
