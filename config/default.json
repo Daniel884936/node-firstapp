@@ -1,0 +1,10 @@
+{
+    "appName":"Hero app by Erick's Tejada",
+    "configDb":{
+       "host": "mongodb://localhost:27017/heroapp",
+       "useNewUrlParser": true,
+       "useUnifiedTopology": true,
+       "useCreateIndex": true
+    },
+    "port":3000
+}
