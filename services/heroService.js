@@ -6,10 +6,11 @@ module.exports =  async function addHero(hero){
     const heroModel = new Hero({
         ...hero
     })
-    await heroModel.save();
+    return await heroModel.save();
    }catch(error){
        console.error(error)
-   }   
+   }
+   return null;   
 }
 
 
@@ -31,14 +32,25 @@ module.exports = async function getById(id){
     return null;
 }
 
-module.exports = async function deleteHero(){
+module.exports = async function deleteHero(id){
     try{
-        await Hero.deleteOne()        
+        await Hero.deleteOne({_id: id})           
     }catch(error){
-        console.error(error)
-        return false;
+        console.error(error)  
+        return false      
     }    
     return true;
+}
+
+module.exports = async function updateHero(hero){    
+    try{
+        return await Hero.findOneAndUpdate({_id: hero.id},hero,{new:true}).populate("user",{
+            _id:1
+        })        
+    }catch(error){
+        console.error(error)
+    }
+    return null;
 }
 
 
