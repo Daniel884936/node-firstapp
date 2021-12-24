@@ -11,7 +11,9 @@ module.exports = async function heroValidator(fn){
         const hero = request.body;
         const {error} = schema.validate(hero)
         if(!error){
-            fn(request, response)
+            fn(request, response).catch(error=>{
+                console.log(error)
+            })
             next()
         }
         response.StatusCodes(StatusCodes.BAD_REQUEST).send(json(error));

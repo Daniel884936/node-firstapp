@@ -30,7 +30,12 @@ module.exports = async function getById(request, response){
     response.status(StatusCodes.OK).send(json(hero))
 }
 
-module.exports = async function getAll(request, response){    
-    const heroes = await heroService.getAllHeroes()
-    response.status(StatusCodes.OK).send(json(heroes))
+module.exports = async function getAll(request, response){ 
+    try{
+        const heroes = await heroService.getAllHeroes()
+        response.status(StatusCodes.OK).send(json(heroes))
+    }catch(error){
+        response.status(StatusCodes.INTERNAL_SERVER_ERROR).send(json(heroes))
+    }
+    
 }
