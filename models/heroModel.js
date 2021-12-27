@@ -21,5 +21,19 @@ const heroSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Hero', heroSchema);
+module.exports =  mongoose.model('Hero', heroSchema);
+
+/* const Hero  = mongoose.model('Hero', heroSchema);
+
+async function saveHero(){
+    const hero  = new Hero({
+        name: 'Daniel', 
+        description:'nasda',
+        age:21
+    })
+
+    await hero.save()
+}
+
+saveHero(); */
 

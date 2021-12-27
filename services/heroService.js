@@ -1,56 +1,33 @@
 const Hero = require('../models/heroModel')
 
 
-module.exports =  async function addHero(hero){
-   try{
-    const heroModel = new Hero({
-        ...hero
-    })
-    return await heroModel.save();
-   }catch(error){
-       console.error(error)
-   }
-   return null;   
+module.exports.addHero =  (hero) =>{
+     const heroModel = new Hero({
+         ...hero
+     })
+     return heroModel.save().then(dbHero=> dbHero !== isNaN(dbHero) ? dbHero : null)
+ }
+
+
+module.exports.getAllHeroes = ()=>{    
+    return Hero.find().then(heroes => heroes !== isNaN(heroes) ? heroes : [])  
 }
 
 
-module.exports = async function getAllHeroes(){
-    try{
-        return await Hero.find();
-    }catch(error){
-        console.error(error)
-    }
-    return []
+module.exports.getByIdHero =  (id) =>{    
+    return  Hero.findById(id).then(hero=> hero !== isNaN(hero) ? hero : null)    
 }
 
-module.exports = async function getById(id){
-    try{
-        return await Hero.findById(id)
-    }catch(error){
-        console.error(error)
-    }
-    return null;
+
+module.exports.deleteHero = (id) =>{
+    return Hero.deleteOne({_id: id}).then(hero=> hero !== isNaN(hero) ? hero : null)               
 }
 
-module.exports = async function deleteHero(id){
-    try{
-        await Hero.deleteOne({_id: id})           
-    }catch(error){
-        console.error(error)  
-        return false      
-    }    
-    return true;
-}
 
-module.exports = async function updateHero(hero){    
-    try{
-        return await Hero.findOneAndUpdate({_id: hero.id},hero,{new:true}).populate("user",{
-            _id:1
-        })        
-    }catch(error){
-        console.error(error)
-    }
-    return null;
+module.exports.updateHero = (hero) => {    
+    return Hero.findOneAndUpdate({_id: hero.id},hero,{new:true}).populate("user",{
+        _id:1
+    }).then(dbHero=> dbHero !== isNaN(dbHero) ? dbHero : null)
 }
 
 
