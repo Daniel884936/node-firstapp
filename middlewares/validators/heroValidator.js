@@ -1,21 +1,20 @@
 const Joi = require('joi')
 const { StatusCodes} = require('http-status-codes')
 
-module.exports = async function heroValidator(fn){
+module.exports.heroValidator = (fn) =>{
     return function(request, response, next){
         
         const schema  = Joi.object({
-         name: Joi.string().required(),
-         userId: Joi.string().required()
-        })
+         name: Joi.string().alphanum().required(),
+         userId: Joi.string().alphanum().required()
+        })        
+        console.log(request.body)
         const hero = request.body;
         const {error} = schema.validate(hero)
         if(!error){
-            fn(request, response).catch(error=>{
-                console.log(error)
-            })
-            next()
+            return fn(request, response)            
         }
-        response.StatusCodes(StatusCodes.BAD_REQUEST).send(json(error));
+        console.log(error)
+        response.status(StatusCodes.BAD_REQUEST).json(error);        
     }
 }

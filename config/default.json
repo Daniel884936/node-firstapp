@@ -1,5 +1,5 @@
 {
-    "appName":"Hero app by Erick's Tejada",
+    "appName":"Hero app by Erick Tejada",
     "configDb":{
        "host": "mongodb://localhost:27017/heroapp",
        "useNewUrlParser": true,

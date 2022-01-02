@@ -1,13 +1,12 @@
 const express = require('express')
-const heroValidator = require('../middlewares/validators/heroValidator')
+const {heroValidator} = require('../middlewares/validators/heroValidator')
 const router = express.Router()
+const {catchErrors} = require('../middlewares/handlers/errorHandler')
 const {addHero,putHero,deleteHero,getById,getAll} = require('./hero')
 
-router.post('/api/hero', addHero)
-router.put('/api/hero', putHero)
-router.delete('/api/hero', deleteHero)
-router.get('/api/hero/:id', getById)
-router.get('/api/hero', getAll)
-
-
-exports.module = router; 
+router.post('/api/hero', catchErrors(heroValidator(addHero)))
+router.put('/api/hero', catchErrors(putHero))
+router.delete('/api/hero',catchErrors(deleteHero))
+router.get('/api/hero/:id', catchErrors(getById))
+router.get('/api/hero', catchErrors(getAll))
+module.exports = router; 

@@ -1,41 +1,38 @@
 const heroService = require('../services/heroService')
-const { StatusCodes} = require('http-status-codes')
 
-
-module.exports = async function addHero(request, response){
-    const {name, surnames, password, email} =  request.body;
-    let hero = {name, surnames, password, email};
+module.exports.addHero = async (request, response) =>{    
+    const {name, description, age, hability,user} =  request.body;
+    let hero = {name, description, age, hability,user};
+    console.log(hero)         
     hero = await heroService.addHero(hero)    
-    response.status(StatusCodes.OK).send(json(hero))
+    console.log(hero)
+    response.json(hero)
 }
 
-module.exports = async function putHero(request, response){
-    const {name, surnames, password, email} =  request.body;
-    let hero = {name, surnames, password, email};
+module.exports.putHero = async  (request, response)=>{
+
+    const {name, description, age, hability,user} =  request.body;
+    let hero = {name, description, age, hability,user};
     hero =  await heroService.updateHero(hero)
-    response.status(StatusCodes.OK).send(json(hero))
+    response.json(hero)          
 }
 
 
-module.exports = async function deleteHero(request, response){
-    const {id} =  request.body;    
+module.exports.deleteHero = async  (request, response) =>{
+    const {id} =  req.params;    
     let hero = await heroService.deleteHero(id)
-    response.status(StatusCodes.OK).send(json(hero))
+    response.json(hero)        
 }
 
 
-module.exports = async function getById(request, response){
-    const {id} =  request.body;    
-    const hero = await heroService.getById(id)
-    response.status(StatusCodes.OK).send(json(hero))
+module.exports.getById = async (request, response)=>{    
+    const {id} =  request.params;    
+    const hero = await heroService.getByIdHero(id)
+    response.json(hero)
 }
 
-module.exports = async function getAll(request, response){ 
-    try{
-        const heroes = await heroService.getAllHeroes()
-        response.status(StatusCodes.OK).send(json(heroes))
-    }catch(error){
-        response.status(StatusCodes.INTERNAL_SERVER_ERROR).send(json(heroes))
-    }
-    
+module.exports.getAll = async (request, response) =>{     
+    const heroes = await heroService.getAllHeroes()            
+    response.json(heroes)
+    console.error(error)
 }

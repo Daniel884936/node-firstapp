@@ -15,12 +15,12 @@ module.exports.getAllHeroes = ()=>{
 
 
 module.exports.getByIdHero =  (id) =>{    
-    return  Hero.findById(id).then(hero=> hero !== isNaN(hero) ? hero : null)    
+    return  Hero.findById(id).then(hero => hero !== isNaN(hero) ? hero : null)    
 }
 
 
 module.exports.deleteHero = (id) =>{
-    return Hero.deleteOne({_id: id}).then(hero=> hero !== isNaN(hero) ? hero : null)               
+    return Hero.deleteOne({_id: id}).then(hero => hero !== isNaN(hero) ? hero : null)               
 }
 
 
