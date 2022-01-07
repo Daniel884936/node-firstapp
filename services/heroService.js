@@ -20,7 +20,7 @@ module.exports.getByIdHero =  (id) =>{
 
 
 module.exports.deleteHero = (id) =>{
-    return Hero.deleteOne({_id: id}).then(hero => hero !== isNaN(hero) ? hero : null)               
+    return Hero.deleteOne({_id: id})
 }
 
 

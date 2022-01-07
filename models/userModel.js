@@ -25,18 +25,12 @@ const userSchema = new Schema({
         required: true,
         default: true
     },
-    users:[
-        {
-            userId: String,
-            name: String,
-            surnames: String         
-        }
-    ]
+    heroes:[String]
 })
 
 
 userSchema.pre('remove', async function(next){
-    await mongoose.model('Hero').deleteMany({user: this._id})
+    await mongoose.model('Hero').deleteMany({heroes: this._id})
     next();
 })
 
