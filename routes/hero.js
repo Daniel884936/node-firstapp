@@ -33,6 +33,5 @@ module.exports.getById = async (request, response)=>{
 
 module.exports.getAll = async (request, response) =>{     
     const heroes = await heroService.getAllHeroes()            
-    response.json(heroes)
-    console.error(error)
+    response.json(heroes)    
 }
