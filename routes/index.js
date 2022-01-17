@@ -4,9 +4,9 @@ const router = express.Router()
 const {catchErrors} = require('../middlewares/handlers/errorHandler')
 const {addHero,putHero,deleteHero,getById,getAll} = require('./hero')
 
-router.post('/api/hero', catchErrors(heroValidator(addHero)))
-router.put('/api/hero', catchErrors(heroValidator(putHero)))
+router.post('/api/hero',heroValidator,catchErrors(addHero))
+router.put('/api/hero', heroValidator,catchErrors(putHero))
 router.delete('/api/hero',catchErrors(deleteHero))
-router.get('/api/hero', catchErrors(getAll))
-router.get('/api/hero/:id', catchErrors(getById))
+router.get('/api/hero',catchErrors(getAll))
+router.get('/api/hero/:id',catchErrors(getById))
 module.exports = router; 
