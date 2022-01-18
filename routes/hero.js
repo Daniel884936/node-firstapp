@@ -1,37 +1,51 @@
 const heroService = require('../services/heroService')
+const {buildApiResult} = require('../api-result/apiResult')
+const { StatusCodes} = require('http-status-codes')
+
 
 module.exports.addHero = async (request, response) =>{    
     const {name, description, age, hability,user} =  request.body;
     let hero = {name, description, age, hability,user};
     console.log(hero)         
-    hero = await heroService.addHero(hero)    
-    console.log(hero)
-    return response.json(hero)
+    const result = await heroService.addHero(hero)    
+    console.log(result)
+    return response.json(buildApiResult(result.data,result.status))
 }
 
-module.exports.putHero = async  (request, response)=>{
-
+module.exports.putHero = async (request, response)=>{
+    const {id} =  request.params;
     const {name, description, age, hability,user} =  request.body;
     let hero = {name, description, age, hability,user};
-    hero =  await heroService.updateHero(hero)
-    return response.json(hero)          
+    const result = await heroService.updateHero(id,hero)
+
+    if(result.status === StatusCodes.NOT_FOUND){
+        return response.status(StatusCodes.NOT_FOUND)
+                .json(buildApiResult(result.data,result.status))
+    }
+    console.log(result)
+    return response.json(buildApiResult(true,result.status))          
 }
 
 
-module.exports.deleteHero = async  (request, response) =>{
-    const {id} =  req.params;    
-    let hero = await heroService.deleteHero(id)
-    return response.json(hero)        
+module.exports.deleteHero = async (request, response) =>{
+    const {id} =  request.params;    
+    let result = await heroService.deleteHero(id)
+
+    if(result.status === StatusCodes.NOT_FOUND){
+        return response.status(StatusCodes.NOT_FOUND)
+                .json(buildApiResult(result.data,result.status))
+    }
+    return response.json(result)        
 }
 
 
 module.exports.getById = async (request, response)=>{    
     const {id} =  request.params;    
-    const hero = await heroService.getByIdHero(id)
-    return response.json(hero)
+    const result = await heroService.getByIdHero(id)
+    return response.json(buildApiResult(result.data,result.status))
 }
 
 module.exports.getAll = async (request, response) =>{     
-    const heroes = await heroService.getAllHeroes()            
-    return response.json(heroes)    
+    const result = await heroService.getAllHeroes()            
+    return response.json(buildApiResult(result.data,result.status))    
 }

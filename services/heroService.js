@@ -21,7 +21,7 @@ module.exports.getByIdHero =  (id) =>{
 
 
 module.exports.deleteHero = (id) =>{
-    return Hero.deleteOne({_id: id}).then(hero => {
+    return Hero.findByIdAndDelete(id).then(hero => {
         if(hero){
             return success(hero)
         }
@@ -30,8 +30,8 @@ module.exports.deleteHero = (id) =>{
 }
 
 
-module.exports.updateHero = (hero) => {    
-    return Hero.findOneAndUpdate({_id: hero.id},hero,{new:true}).populate("user",{
+module.exports.updateHero = (id,hero) => {    
+    return Hero.findByIdAndUpdate({_id: id},hero,{new:true}).populate("user",{
         _id:1
     }).then(hero => {
         if(hero){
