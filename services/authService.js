@@ -3,8 +3,7 @@ const {success,conflict} = require('../service-result/serviceResult')
 
 
 module.exports.getUserByCredentials = (email, password) =>{
-    return User.findOne({email: email, password: password}).then(user=> success(user)
-    )
+    return User.findOne({email: email, password: password}).then(success)
 }
 
 module.exports.register = async (user) =>{
@@ -15,10 +14,5 @@ module.exports.register = async (user) =>{
     if(userExist){
         return Promise.resolve(conflict(null,['User already exist!']))
     }
-    return userModel.save().then(userFromDb =>{ 
-        return success({
-        name: userFromDb.name,
-        surnames: userFromDb.surnames,
-        email: userFromDb.email
-    })})
+    return userModel.save().then(success)
 }

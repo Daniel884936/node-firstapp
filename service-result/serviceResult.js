@@ -1,7 +1,7 @@
 const { StatusCodes} = require('http-status-codes')
 
-const buildServiceResult = ( data, erros, status) =>{
-    return{data, erros, status}
+const buildServiceResult = ( data, errors, status) =>{
+    return{data, errors, status}
 }
 
 module.exports.success = (data) =>{

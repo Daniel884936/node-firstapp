@@ -1,6 +1,8 @@
 const heroService = require('../services/heroService')
 const {buildApiResult} = require('../api-result/apiResult')
 const { StatusCodes} = require('http-status-codes')
+const {heroMap} = require('../mappers/objectMappers')
+const objectMapper = require('object-mapper')
 
 
 module.exports.addHero = async (request, response) =>{    
@@ -9,7 +11,9 @@ module.exports.addHero = async (request, response) =>{
     console.log(hero)         
     const result = await heroService.addHero(hero)    
     console.log(result)
-    return response.json(buildApiResult(result.data,result.status))
+    const {data} = result  
+    const heroDTO =  objectMapper(data,heroMap)   
+    return response.json(buildApiResult(heroDTO,result.status))
 }
 
 module.exports.putHero = async (request, response)=>{
@@ -22,8 +26,10 @@ module.exports.putHero = async (request, response)=>{
         return response.status(StatusCodes.NOT_FOUND)
                 .json(buildApiResult(result.data,result.status))
     }
-    console.log(result)
-    return response.json(buildApiResult(true,result.status))          
+    console.log(result)    
+    const {data} = result  
+    const heroDTO =  objectMapper(data,heroMap)   
+    return response.json(buildApiResult(heroDTO,result.status))          
 }
 
 
@@ -35,17 +41,24 @@ module.exports.deleteHero = async (request, response) =>{
         return response.status(StatusCodes.NOT_FOUND)
                 .json(buildApiResult(result.data,result.status))
     }
-    return response.json(result)        
+    const {data} = result  
+    const heroDTO =  objectMapper(data,heroMap)   
+    return response.json(buildApiResult(heroDTO,result.status))        
 }
 
 
 module.exports.getById = async (request, response)=>{    
     const {id} =  request.params;    
     const result = await heroService.getByIdHero(id)
-    return response.json(buildApiResult(result.data,result.status))
+    const {data} = result  
+    const heroDTO =  objectMapper(data,heroMap)   
+    return response.json(buildApiResult(heroDTO,result.status))
 }
 
 module.exports.getAll = async (request, response) =>{     
     const result = await heroService.getAllHeroes()            
-    return response.json(buildApiResult(result.data,result.status))    
+    console.log(result)
+    const {data} = result    
+    const heroesDTO = data.map( value => objectMapper(value,heroMap))   
+    return response.json(buildApiResult(heroesDTO,result.status))       
 }
